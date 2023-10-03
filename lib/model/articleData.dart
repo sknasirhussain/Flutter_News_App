@@ -20,7 +20,7 @@ ArticleData({
       imgurl: article["urlToImage"] ?? "https://img.freepik.com/free-vector/news-concept-landing-page_52683-20522.jpg",
       heading: article["title"] ?? "!Blank!",
       desc: article["description"] ?? "-Blank-",
-      content: article["content"] ?? "Click read more!",
+      content: article["content"] ?? ["title"+"...Click on Read More to read ahead!"],
       newsURL: article["url"] ?? "https://news.google.com/home?hl=en-IN&gl=IN&ceid=IN:en",
   );
   }
