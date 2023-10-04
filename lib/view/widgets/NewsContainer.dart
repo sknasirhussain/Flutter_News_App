@@ -1,23 +1,22 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_interpolation_to_compose_strings
 
 import 'package:flutter/material.dart';
 import 'package:news_app/view/WebView.dart';
 
 class NewsContainer extends StatelessWidget {
-  
-  String removeHtmlTags(String text) {
-    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
-    return text.replaceAll(exp, '');
-  }
+
+
 
   String imgurl;
   String heading;
   String desc;
   String newsContent;
   String newsURL;
+  bool isLoading = false;
 
 
   NewsContainer({super.key,
+
     required this.imgurl,
     required this.heading,
     required this.desc,
@@ -25,6 +24,13 @@ class NewsContainer extends StatelessWidget {
     required this.newsURL,
 
   });
+
+  //a function to remove html tags from the texts
+  String removeHtmlTags(String text) {
+    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+    return text.replaceAll(exp, '');
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,10 +75,10 @@ class NewsContainer extends StatelessWidget {
 
             Padding(
               padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-              child: Text(
+              child: Text(removeHtmlTags(
                 desc.length > 25 && desc.indexOf('.') != -1
                     ? desc.substring(0, desc.indexOf('.'))
-                    : desc,
+                    : desc,),
                 style: TextStyle(
                 color: Colors.white54,
                 fontSize : 12,
@@ -82,12 +88,12 @@ class NewsContainer extends StatelessWidget {
             SizedBox(height: 10),
             Padding(
                   padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-                  child: Text(
+                  child: Text(removeHtmlTags(
                     newsContent.length > 200
-                        ? newsContent.substring(0, 200) + " Click on 'Read more'"
+                        ? newsContent.substring(0, 200) + "Click on 'Read more'"
                         : newsContent.length >= 25
                         ? "${newsContent.substring(0, newsContent.length - 25)}..."
-                        : newsContent,
+                        : newsContent,),
                     style: TextStyle(
                       color: Colors.white,
                     fontSize : 17,
@@ -104,17 +110,15 @@ class NewsContainer extends StatelessWidget {
                   child: ElevatedButton(onPressed: () {
                     Navigator.push(context,MaterialPageRoute(builder: (context)=>DetailedScreen(newsUrl: newsURL)));
                   },
-
-                        child: Text("Read More", style: TextStyle(
-                            color: Color(0xFFff1e56),
-                            fontWeight: FontWeight.bold),
-                        ),
+                            child: Text("Read More", style: TextStyle(
+                                color: Color(0xFFff1e56),
+                                fontWeight: FontWeight.bold),
+                    ),
                     style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(Colors.black54),
                         elevation: MaterialStateProperty.all(20),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
-
                             borderRadius: BorderRadius.circular(20),
                             side: BorderSide(color: Color(0xFFff1e56)
                           )
@@ -126,7 +130,6 @@ class NewsContainer extends StatelessWidget {
                 )
               ],
             )
-
           ]),
         ),
       ),

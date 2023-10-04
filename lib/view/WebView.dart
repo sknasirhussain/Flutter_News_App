@@ -38,32 +38,22 @@ class _DetailedScreenState extends State<DetailedScreen> {
         title: Center(child: Padding(
         padding: const EdgeInsets.fromLTRB(0, 0, 55, 0),
         child: Text("News Burst", style:
-        TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Color(0xFFff1e56),
-        /* foreground: Paint()
-           ..style=PaintingStyle.stroke
-           ..strokeWidth=6
-           ..color=Colors.black,*/
-
-        ),
-        ),
+    TextStyle(
+    fontWeight: FontWeight.bold,
+    color: Color(0xFFff1e56),),
+            )
+          ),
+        )
+      ),
+      body: WebView(
+        initialUrl: widget.newsUrl,
+        javascriptMode: JavascriptMode.unrestricted,
+        onWebViewCreated: (WebViewController webViewController){
+          setState(() {
+            controller.complete(webViewController);
+          });
+        },
       )
-      ),
-      ),
-      body:
-         Card(
-           child: WebView(
-            initialUrl: widget.newsUrl,
-            javascriptMode: JavascriptMode.unrestricted,
-            onWebViewCreated: (WebViewController webViewController){
-              setState(() {
-                controller.complete(webViewController);
-              });
-            },
-        ),
-         ),
       );
-
   }
 }

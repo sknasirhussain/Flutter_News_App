@@ -14,7 +14,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool isloading = true;
-
+  Future<ArticleData>? nextPageData;
   late ArticleData articleData;
 
   findNews() async{
@@ -23,9 +23,14 @@ class _HomeScreenState extends State<HomeScreen> {
       isloading = false;
     });
   }
+
+  fetchNextPageData() async {
+    nextPageData = GetNews.fetchNews();
+  }
   @override
   void initState() {
     findNews();
+    fetchNextPageData();
     super.initState();
 
   }
@@ -44,6 +49,25 @@ class _HomeScreenState extends State<HomeScreen> {
             findNews();
           },
           itemBuilder: (context, index){
+
+            if (index == 1 && nextPageData != null) {
+              return FutureBuilder<ArticleData>(
+                future: nextPageData,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return NewsContainer(
+                      imgurl: snapshot.data!.imgurl,
+                      heading: snapshot.data!.heading,
+                      desc: snapshot.data!.desc,
+                      newsContent: snapshot.data!.content,
+                      newsURL: snapshot.data!.newsURL,
+                    );
+                  } else {
+                    return Center(child: CircularProgressIndicator(),);
+                  }
+                },
+              );
+            }
 
             return isloading ? Center(child: CircularProgressIndicator(),): NewsContainer(
               imgurl: articleData.imgurl,

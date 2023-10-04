@@ -28,8 +28,8 @@ class GetNews{
       "techcrunch",
       "techradar",
       "the-hindu",
-      "the-wall-street-journal",
-      "the-washington-times",
+      //"the-wall-street-journal",
+      //"the-washington-times",
       "time",
       "usa-today",
     ];
@@ -40,13 +40,13 @@ class GetNews{
     print(item);
 
     Response response = await get(Uri.parse(
-        "https://newsapi.org/v2/top-headlines?sources=$item&apiKey=63bdab4fa5b74be9aeb91ea24e12bcc2"));
+        "https://newsapi.org/v2/top-headlines?sources=$item&apiKey=794b3f35410b4495ae582974bb8cca82"));
     Map datas = jsonDecode(response.body);
     List article = datas["articles"];
     print(article);
     // Cache the JSON data
     await _cacheManager.putFile(
-        "https://newsapi.org/v2/top-headlines?sources=$item&apiKey=63bdab4fa5b74be9aeb91ea24e12bcc2",
+        "https://newsapi.org/v2/top-headlines?sources=$item&apiKey=794b3f35410b4495ae582974bb8cca82",
         response.bodyBytes);
   }
 
@@ -57,7 +57,7 @@ class GetNews{
     print(item);
 
     Response response = await get(Uri.parse(
-        "https://newsapi.org/v2/top-headlines?sources=$item&apiKey=63bdab4fa5b74be9aeb91ea24e12bcc2"));
+        "https://newsapi.org/v2/top-headlines?sources=$item&apiKey=794b3f35410b4495ae582974bb8cca82"));
     Map data = jsonDecode(response.body);
     List articles = data["articles"];
     //print(articles);
