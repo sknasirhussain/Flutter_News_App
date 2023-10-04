@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:news_app/view/WebView.dart';
 
 class NewsContainer extends StatelessWidget {
+  
+  String removeHtmlTags(String text) {
+    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
+    return text.replaceAll(exp, '');
+  }
 
   String imgurl;
   String heading;
@@ -53,7 +58,7 @@ class NewsContainer extends StatelessWidget {
 
             Padding(
               padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-              child: Text(heading,
+              child: Text(removeHtmlTags(heading),
                 style: TextStyle(
                   color: Colors.white,
                   fontSize : 27,
@@ -64,22 +69,24 @@ class NewsContainer extends StatelessWidget {
 
             Padding(
               padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
-              child: Text(desc, style: TextStyle(
-                  color: Colors.white54,
-                  fontSize : 12,
-
-                  ),
+              child: Text(
+                desc.length > 25 && desc.indexOf('.') != -1
+                    ? desc.substring(0, desc.indexOf('.'))
+                    : desc,
+                style: TextStyle(
+                color: Colors.white54,
+                fontSize : 12,
+                ),
               ),
             ),
             SizedBox(height: 10),
             Padding(
                   padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
                   child: Text(
-                    newsContent.length > 250
-                        ? newsContent.substring(0, 250)
+                    newsContent.length > 200
+                        ? newsContent.substring(0, 200) + " Click on 'Read more'"
                         : newsContent.length >= 25
                         ? "${newsContent.substring(0, newsContent.length - 25)}..."
-                        + " Click on the 'Read more' button to read ahead!"
                         : newsContent,
                     style: TextStyle(
                       color: Colors.white,

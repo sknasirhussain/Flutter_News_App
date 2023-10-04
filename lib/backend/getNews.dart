@@ -2,10 +2,13 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:http/http.dart';
 import 'package:news_app/model/articleData.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
 
 class GetNews{
-    static List sourcesId = [
+  static final _cacheManager = DefaultCacheManager();
+
+  static List sourcesId = [
       "abc-news",
       "bbc-news",
       "bbc-sport",
@@ -13,11 +16,10 @@ class GetNews{
       "entertainment-weekly",
       "espn",
       "espn-cric-info",
-      "financial-post",
       "fox-news",
       "fox-sports",
-      "google-news",
-      "google-news-in",
+      //"google-news",
+      //"google-news-in",
       "medical-news-today",
       "news24",
       "new-scientist",
@@ -31,6 +33,22 @@ class GetNews{
       "time",
       "usa-today",
     ];
+
+  static Future<void> cacheNewsData() async {
+    final random = new Random();
+    var item = sourcesId[random.nextInt(sourcesId.length)];
+    print(item);
+
+    Response response = await get(Uri.parse(
+        "https://newsapi.org/v2/top-headlines?sources=$item&apiKey=63bdab4fa5b74be9aeb91ea24e12bcc2"));
+    Map datas = jsonDecode(response.body);
+    List article = datas["articles"];
+    print(article);
+    // Cache the JSON data
+    await _cacheManager.putFile(
+        "https://newsapi.org/v2/top-headlines?sources=$item&apiKey=63bdab4fa5b74be9aeb91ea24e12bcc2",
+        response.bodyBytes);
+  }
 
   static Future<ArticleData> fetchNews() async{
 
