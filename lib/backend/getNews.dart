@@ -40,13 +40,13 @@ class GetNews{
     print(item);
 
     Response response = await get(Uri.parse(
-        "https://newsapi.org/v2/top-headlines?sources=$item&apiKey=794b3f35410b4495ae582974bb8cca82"));
+        "https://newsapi.org/v2/top-headlines?sources=$item&apiKey=312cc10530c84a64a587555a13db237d"));
     Map datas = jsonDecode(response.body);
     List article = datas["articles"];
     print(article);
     // Cache the JSON data
     await _cacheManager.putFile(
-        "https://newsapi.org/v2/top-headlines?sources=$item&apiKey=794b3f35410b4495ae582974bb8cca82",
+        "https://newsapi.org/v2/top-headlines?sources=$item&apiKey=312cc10530c84a64a587555a13db237d",
         response.bodyBytes);
   }
 
@@ -57,7 +57,7 @@ class GetNews{
     print(item);
 
     Response response = await get(Uri.parse(
-        "https://newsapi.org/v2/top-headlines?sources=$item&apiKey=794b3f35410b4495ae582974bb8cca82"));
+        "https://newsapi.org/v2/top-headlines?sources=$item&apiKey=312cc10530c84a64a587555a13db237d"));
     Map data = jsonDecode(response.body);
     List articles = data["articles"];
     //print(articles);
